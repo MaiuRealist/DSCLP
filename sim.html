@@ -1,0 +1,615 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma desculpa para você ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #0d0710;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Fundo */
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 20% 20%, #5c183f 0%, transparent 30%),
+                radial-gradient(circle at 80% 80%, #351047 0%, transparent 30%),
+                linear-gradient(135deg, #0d0710, #1b0918, #100815);
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: 0.2;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Corações */
+        .heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 20px;
+            animation: floatHeart linear forwards;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            animation: appear 1.5s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .small-heart {
+            font-size: 60px;
+            animation: heartbeat 1.4s infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.2);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+
+            45% {
+                transform: scale(1.15);
+            }
+        }
+
+        h1 {
+            font-size: clamp(42px, 8vw, 82px);
+            margin: 15px 0;
+            background: linear-gradient(90deg, #fff, #ff8fc7, #fff);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #e7cddd;
+            line-height: 1.7;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .btn {
+            margin-top: 35px;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #ff3f91, #b91c63);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 50, 140, 0.3);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 15px 40px rgba(255, 50, 140, 0.5);
+        }
+
+        /* Seções */
+        section {
+            padding: 100px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 50px;
+        }
+
+        /* Carta */
+        .letter {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 143, 199, 0.25);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 45px;
+            box-shadow: 0 20px 70px rgba(0,0,0,0.3);
+            line-height: 1.9;
+            font-size: 18px;
+            color: #f4dfea;
+        }
+
+        .letter p {
+            margin-bottom: 20px;
+        }
+
+        .letter .highlight {
+            color: #ff82bd;
+            font-weight: bold;
+        }
+
+        .signature {
+            margin-top: 35px;
+            text-align: right;
+            font-size: 22px;
+            color: white;
+            font-style: italic;
+        }
+
+        /* Cards */
+        .reasons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,100,170,0.5);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #ff8fc7;
+        }
+
+        .card p {
+            color: #d8c2d0;
+            line-height: 1.6;
+        }
+
+        /* Pergunta */
+        .question {
+            text-align: center;
+        }
+
+        .question h2 {
+            font-size: clamp(32px, 6vw, 55px);
+            margin-bottom: 20px;
+        }
+
+        .question p {
+            color: #d9c4d2;
+            font-size: 18px;
+        }
+
+        /* Botões finais */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .forgive {
+            background: linear-gradient(135deg, #ff4b9b, #d51d70);
+        }
+
+        .hug {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: none;
+        }
+
+        /* Mensagem final */
+        #finalMessage {
+            display: none;
+            margin-top: 40px;
+            padding: 35px;
+            border-radius: 25px;
+            background: rgba(255, 73, 154, 0.1);
+            border: 1px solid rgba(255, 73, 154, 0.3);
+            animation: appear 0.8s ease;
+        }
+
+        #finalMessage h3 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #ff8fc7;
+        }
+
+        #finalMessage p {
+            color: #f3dce9;
+            line-height: 1.7;
+            font-size: 18px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #917b89;
+            font-size: 14px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 700px) {
+            .reasons {
+                grid-template-columns: 1fr;
+            }
+
+            .letter {
+                padding: 28px 22px;
+                font-size: 16px;
+            }
+
+            section {
+                padding: 70px 18px;
+            }
+
+            .small-heart {
+                font-size: 45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background"></div>
+    <div class="stars" id="stars"></div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+
+            <div class="small-heart">❤️</div>
+
+            <h1>Me desculpa.</h1>
+
+            <p class="subtitle">
+                Eu poderia tentar encontrar mil palavras para explicar,
+                mas nenhuma delas seria mais importante do que dizer
+                que eu sinto muito.
+            </p>
+
+            <button class="btn" onclick="scrollToLetter()">
+                💌 Ler minha mensagem
+            </button>
+
+        </div>
+    </section>
+
+    <!-- CARTA -->
+    <section id="letterSection">
+        <div class="container">
+
+            <h2 class="section-title">Uma carta para você 💗</h2>
+
+            <div class="letter">
+
+                <p>
+                    Meu amor,
+                </p>
+
+                <p>
+                    Eu sei que errei e sei que talvez um simples
+                    "desculpa" não seja suficiente para consertar
+                    o que aconteceu.
+                </p>
+
+                <p>
+                    Mesmo assim, eu quero que você saiba que
+                    <span class="highlight">eu reconheço meu erro</span>.
+                    Não quero diminuir o que você sentiu,
+                    muito menos fingir que nada aconteceu.
+                </p>
+
+                <p>
+                    Você é uma pessoa muito importante para mim,
+                    e a última coisa que eu quero é ser o motivo
+                    da sua tristeza.
+                </p>
+
+                <p>
+                    Se eu pudesse voltar no tempo, faria diferente.
+                    Mas como não posso, o que posso fazer agora é
+                    aprender com isso, assumir minha responsabilidade
+                    e mostrar através das minhas atitudes que
+                    minhas palavras são verdadeiras.
+                </p>
+
+                <p>
+                    Eu não espero que você simplesmente esqueça.
+                    Só espero que consiga perceber o quanto
+                    <span class="highlight">eu me arrependo</span>
+                    e o quanto você significa para mim.
+                </p>
+
+                <p>
+                    Eu te amo. ❤️
+                </p>
+
+                <div class="signature">
+                    Com amor,<br>
+                    seu namorado.
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MOTIVOS -->
+    <section>
+        <div class="container">
+
+            <h2 class="section-title">Porque você é importante para mim</h2>
+
+            <div class="reasons">
+
+                <div class="card">
+                    <div class="card-icon">❤️</div>
+                    <h3>Meu amor</h3>
+                    <p>
+                        Você ocupa um espaço enorme no meu coração
+                        e na minha vida.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🫂</div>
+                    <h3>Meu porto seguro</h3>
+                    <p>
+                        Seu abraço, sua presença e seu carinho
+                        significam mais do que consigo explicar.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">✨</div>
+                    <h3>Meu futuro</h3>
+                    <p>
+                        Quero continuar construindo momentos,
+                        histórias e memórias ao seu lado.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PERGUNTA -->
+    <section>
+        <div class="container question">
+
+            <h2>Você me perdoa? 🥺</h2>
+
+            <p>
+                Eu sei que talvez eu não mereça uma resposta agora...
+                mas eu queria muito poder ganhar um abraço seu.
+            </p>
+
+            <div class="buttons">
+
+                <button class="btn forgive" onclick="forgive()">
+                    ❤️ Eu te perdoo
+                </button>
+
+                <button class="btn hug" onclick="hug()">
+                    🫂 Só quero um abraço
+                </button>
+
+            </div>
+
+            <div id="finalMessage">
+                <h3>Eu sabia que você era especial. ❤️</h3>
+
+                <p>
+                    Obrigado por me ouvir e por dar espaço para
+                    minhas palavras. Eu prometo que vou tentar
+                    transformar esse pedido de desculpas em atitudes.
+                </p>
+
+                <p style="margin-top: 15px;">
+                    Agora vem cá... eu tô te devendo aquele abraço. 🫂❤️
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        Feito com amor, arrependimento e um pouquinho de coragem. ❤️
+    </footer>
+
+
+    <script>
+
+        /* Estrelas */
+        const stars = document.getElementById("stars");
+
+        for (let i = 0; i < 100; i++) {
+
+            const star = document.createElement("div");
+
+            star.classList.add("star");
+
+            star.style.left = Math.random() * 100 + "%";
+            star.style.top = Math.random() * 100 + "%";
+
+            star.style.animationDelay =
+                Math.random() * 2 + "s";
+
+            stars.appendChild(star);
+        }
+
+
+        /* Corações */
+        function createHeart() {
+
+            const heart = document.createElement("div");
+
+            heart.classList.add("heart");
+
+            const hearts = ["❤️", "💕", "💗", "💖", "💘"];
+
+            heart.innerHTML =
+                hearts[Math.floor(Math.random() * hearts.length)];
+
+            heart.style.left =
+                Math.random() * 100 + "vw";
+
+            heart.style.fontSize =
+                (15 + Math.random() * 25) + "px";
+
+            heart.style.animationDuration =
+                (5 + Math.random() * 5) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+
+        setInterval(createHeart, 700);
+
+
+        /* Scroll */
+        function scrollToLetter() {
+
+            document
+                .getElementById("letterSection")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
+        }
+
+
+        /* Perdoou */
+        function forgive() {
+
+            const message =
+                document.getElementById("finalMessage");
+
+            message.style.display = "block";
+
+            for (let i = 0; i < 25; i++) {
+                setTimeout(createHeart, i * 80);
+            }
+
+            message.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+
+        /* Abraço */
+        function hug() {
+
+            alert(
+                "Então vem cá... 🫂❤️\n\n" +
+                "Eu só queria te abraçar bem forte " +
+                "e lembrar o quanto eu te amo."
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>
+```
